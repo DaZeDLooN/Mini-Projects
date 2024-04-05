@@ -7,13 +7,14 @@ const sequelize = require("./db/index");
 
 
 const main = async () => {
+    console.log(process.env)
     const app = express();
     app.use(express.json());
     // app.set("trust proxy", !__prod__); //a little fix here from another users codes--- actually think this made it works
     // app.set("Access-Control-Allow-Origin", "http://localhost:3000");
     // app.set("Access-Control-Allow-Credentials", true);
     app.use(cors({
-        origin:"http://localhost:3000",
+        origin:"http://localhost:5173",
         credentials:true
     }))
 

@@ -10,7 +10,9 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { signUp } from "../../store/features/users/actions";
 
 function Copyright(props: any) {
   return (
@@ -32,16 +34,20 @@ function Copyright(props: any) {
 
 export default function SignUp() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const {user} = useAppSelector(store=>store.user);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const name = (data.get('firstName')?.toString() ?? '') + " " + (data.get('lastName')?.toString() ?? '');
+    data.delete('firstName');
+    data.delete('lastName');
+    data.append('name', name);
+    dispatch(signUp(data));
   };
-
+  const token = window.localStorage.getItem('__token');
+  if(token) return <Navigate to={'/dashboard'} />
   return (
     <Container component="main" maxWidth="xs">
       <Box

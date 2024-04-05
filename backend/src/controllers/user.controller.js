@@ -13,7 +13,7 @@ const register = async (req, res) => {
     }
 
     if (userExists) {
-      throw new BadRequestError("Email is already associated with an accound");
+      throw new BadRequestError("Email is already associated with an account");
     }
 
     const user = await User.create(req.body);
@@ -32,6 +32,7 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password: candidatePass } = req.body;
+    console.log(email, candidatePass);
 
     if (!email || !candidatePass) {
       throw new BadRequestError("Please provide the email and password");
@@ -39,6 +40,7 @@ const login = async (req, res) => {
     const user = await User.findOne({
       where: { email },
     });
+    
     const isPasswordCorrect = await user.comparePasswords(candidatePass);
     if (!isPasswordCorrect) {
       throw new UnauthenticatedError("Invalid Credentials");

@@ -24,18 +24,7 @@ const User = sequelize.define(
     user__type: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    user__language: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    subjectExpertise: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    classGrade: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+      defaultValue:'customer',
     },
     password: {
       type: DataTypes.STRING,
